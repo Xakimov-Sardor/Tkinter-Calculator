@@ -1,8 +1,6 @@
 from tkinter import *
 
 
-
-
 class Btn:
     def __init__(self, text, x, y, width = 100, height = 80, bg_color = 'white') -> None:
         self.text, self.x, self.y, self.width, self.height, self.bg_color = text, x, y, width, height, bg_color
@@ -10,27 +8,38 @@ class Btn:
         btn.place(x=x, y=y, width=width, height=height)
 
 
+def cheats():
+    global main_input, response_label
+
+    if main_input.get() == '/*-':
+        with open('for you.txt', 'a') as file:
+            file.write('I FUCK YOU BITCH\n')
+        print('File created and wrote')
+
 def click(btn: Btn):
     global main_input, response_label
 
-    if btn.text not in ['AC', 'DEL', 'COPY', '=']:
-        try:
-            main_input.insert(END, btn.text)
-        except:...
-    elif btn.text == 'AC':
-        main_input.delete(0, 'end')
-        response_label['text'] = '0'
-    elif btn.text == 'DEL':
-        if len(main_input.get()) > 0:
-            main_input.delete(len(main_input.get())-1)
-    elif btn.text == 'COPY':
-        Tk.clipboard_clear(window)
-        Tk.clipboard_append(window, f'{main_input.get()} = {eval(main_input.get())}')
-    elif btn.text == '=':
-        try:
-            
-            response_label['text'] = eval(main_input.get())
-        except:...
+    cheats()
+    try:
+        if btn.text not in ['AC', 'DEL', 'COPY', '=']:
+            try:
+                main_input.insert(END, btn.text)
+            except:...
+        elif btn.text == 'AC':
+            main_input.delete(0, 'end')
+            response_label['text'] = '0'
+        elif btn.text == 'DEL':
+            if len(main_input.get()) > 0:
+                main_input.delete(len(main_input.get())-1)
+        elif btn.text == 'COPY':
+            Tk.clipboard_clear(window)
+            Tk.clipboard_append(window, f'{main_input.get()} = {eval(main_input.get())}')
+        elif btn.text == '=':
+            try:
+                
+                response_label['text'] = eval(main_input.get())
+            except:...
+    except:...
 window = Tk()
 window.title('Simple Calc')
 window.geometry('400x500')
