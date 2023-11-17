@@ -11,10 +11,9 @@ class Btn:
 def cheats():
     global main_input, response_label
 
-    if main_input.get() == '/*-':
-        with open('for you.txt', 'a') as file:
-            file.write('I FUCK YOU BITCH\n')
-        print('File created and wrote')
+    # if main_input.get() == '/*-':
+    #     print('File created and wrote')
+
 
 def click(btn: Btn):
     global main_input, response_label
