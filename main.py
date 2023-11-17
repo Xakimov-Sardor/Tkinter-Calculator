@@ -4,36 +4,45 @@ from tkinter import *
 
 
 class Btn:
-    def __init__(self, text, x, y, width = 100, height = 80) -> None:
-        self.text, self.x, self.y, self.width, self.height = text, x, y, width, height
-        btn = Button(text=self.text, command=lambda : click(self))
+    def __init__(self, text, x, y, width = 100, height = 80, bg_color = 'white') -> None:
+        self.text, self.x, self.y, self.width, self.height, self.bg_color = text, x, y, width, height, bg_color
+        btn = Button(text=self.text, command=lambda : click(self), border=0, font=('', 20), bg=self.bg_color)
         btn.place(x=x, y=y, width=width, height=height)
 
 
 def click(btn: Btn):
     global main_input, response_label
 
-    if btn.text not in ['AC', 'DEL']:
+    if btn.text not in ['AC', 'DEL', 'COPY', '=']:
         try:
             main_input.insert(END, btn.text)
-            response_label['text'] = eval(main_input.get())
         except:...
     elif btn.text == 'AC':
         main_input.delete(0, 'end')
         response_label['text'] = '0'
-
     elif btn.text == 'DEL':
-        main_input.delete(len(main_input.get())-1)
-        response_label['text'] = eval(main_input.get())
+        if len(main_input.get()) > 0:
+            main_input.delete(len(main_input.get())-1)
+    elif btn.text == 'COPY':
+        Tk.clipboard_clear(window)
+        Tk.clipboard_append(window, f'{main_input.get()} = {eval(main_input.get())}')
+    elif btn.text == '=':
+        try:
+            
+            response_label['text'] = eval(main_input.get())
+        except:...
 window = Tk()
 window.title('Simple Calc')
 window.geometry('400x500')
+window.resizable(False, False)
 
-main_input = Entry()
+main_input = Entry(font=('', 15))
 main_input.place(x=0, y=0, width=400, height=40)
 
 response_label = Label(text='0', font=('', 40))
-response_label.place(x=0, y=40, width=400, height=60)
+response_label.place(x=0, y=40, width=300, height=60)
+
+copy_btn = Btn('COPY', 300, 40, height=60)
 
 btn_ac = Btn('AC', 0, 100, width=200)
 btn_bck = Btn('DEL', 200, 100)
